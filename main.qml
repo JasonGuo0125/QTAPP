@@ -15,10 +15,10 @@ ApplicationWindow {
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
+
         Page1 {
 
         }
-
         Page2 {
 
         }
@@ -27,25 +27,6 @@ ApplicationWindow {
         }
 
     }
-//    RowLayout {
-//        anchors.bottom: tabBar.top
-//        anchors.bottomMargin: 10
-//        anchors.horizontalCenter: parent.horizontalCenter
-//        Button {
-//            id: button1
-//            text: qsTr("Refresh")
-//            onClicked: {
-
-//            }
-//        }
-//        Button {
-//            id: button2
-//            text: qsTr("Save")
-//            onClicked: {
-
-//            }
-//        }
-//    }
 
     footer: TabBar {
         id: tabBar

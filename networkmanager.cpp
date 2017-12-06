@@ -97,6 +97,7 @@ void NetworkManager::replyFinished(QNetworkReply *reply)
             }
 
     }
+
     for (int i=0; i<graphValuesOpen.size(); i++){
         QPair<QString,QString> data = graphValuesOpen[i];
         float list=data.second.toFloat();
@@ -112,6 +113,7 @@ void NetworkManager::replyFinished(QNetworkReply *reply)
         xAxisValue.toMSecsSinceEpoch();
         emit valueUpdated2(QVariant(xAxisValue),QVariant(list));
     }
+
 
     for (int i=0; i<graphValuesClose.size(); i++){
         QPair<QString,QString> data = graphValuesClose[i];
