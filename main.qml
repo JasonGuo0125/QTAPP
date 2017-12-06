@@ -51,13 +51,13 @@ ApplicationWindow {
         id: tabBar
         currentIndex: swipeView.currentIndex
         TabButton {
-            text: qsTr("BitCoin - HUF")
+            text: qsTr("Stock_FB - Open")
         }
         TabButton {
-            text: qsTr("BitCoin Volume")
+            text: qsTr("Stock_FB - High")
         }
         TabButton {
-            text: qsTr("BitCoin - USD")
+            text: qsTr("Stock_FB - Close")
         }
     }
 }

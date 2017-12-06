@@ -10,7 +10,7 @@ Item {
     Connections {
         target: netManager
         onValueUpdated: {
-            y = y / 1000
+
             series.append(x, y)
             if (x > xAxis.max) {
                 xAxis.max = x
@@ -32,7 +32,7 @@ Item {
             Text {
                 id: text1
                 color: "#e91e1e"
-                text: qsTr("Daily BTC - HUF Rates")
+                text: qsTr("Daily Stock_FB - Open")
                 z: 1
                 font.italic: true
                 font.pointSize: 20
@@ -53,17 +53,17 @@ Item {
 
         ChartView {
             id: chartView
-            title: "Bitcoin-HUF chart"
+            title: "Daily chart"
             anchors.fill: parent
             theme: ChartView.ChartThemeLight
             ValueAxis {
                 id: yAxis
-                titleText: "*1000 HUF"
+                titleText: "OpenValue"
                 titleVisible: true
                 gridVisible: true
                 tickCount: 11
-                min: 0
-                max: 1000
+                min: 150
+                max: 200
             }
             DateTimeAxis {
                 id: xAxis
@@ -72,15 +72,15 @@ Item {
                 labelsAngle: 90
                 gridVisible: true
                 format: "yyyy-MM-dd"
-                min: "2015-08-01"
-                max: "2016-12-01"
+                min: "2017-08-01"
+                max: "2017-12-01"
             }
 
             LineSeries {
                 id: series
                 axisX: xAxis
                 axisY: yAxis
-                name: "BTC-HUF series"
+                name: "Daily Stock_FB series"
                 visible: true
             }
         }

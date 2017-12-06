@@ -30,7 +30,7 @@ Item {
             Text {
                 id: text1
                 color: "#e91e1e"
-                text: qsTr("BITCOIN Volume - Daily")
+                text: qsTr("Daily Stock_FB - High")
                 font.italic: true
                 font.pointSize: 20
             }
@@ -47,17 +47,17 @@ Item {
         anchors.bottomMargin: 40
         ChartView {
             id: chartView
-            title: "Bitcoin Daily Volume"
+            title: "Daily chart"
             anchors.fill: parent
 
             ValueAxis {
                 id: yAxis
-                titleText: "Volume of trade"
+                titleText: "HighValue"
                 titleVisible: true
                 gridVisible: true
                 tickCount: 11
-                min: 0
-                max: 2
+                min: 150
+                max: 200
             }
             DateTimeAxis {
                 id: xAxis
@@ -66,12 +66,12 @@ Item {
                 labelsAngle: 90
                 gridVisible: true
                 format: "yyyy-MM-dd"
-                min: "2015-08-01"
-                max: "2016-12-01"
+                min: "2017-08-01"
+                max: "2017-12-01"
             }
             LineSeries {
                 id: series2
-                name: "BTC volume series"
+                name: "Daily Stock_FB series"
                 visible: true
                 axisX: xAxis
                 axisY: yAxis

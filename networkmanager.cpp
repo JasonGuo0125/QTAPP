@@ -21,9 +21,9 @@ NetworkManager::NetworkManager(QObject *parent) : QObject(parent)
 void NetworkManager::loadWebPage(){
     QNetworkRequest request;
 
-    QString apikey = "2HJ6DUVQ3B4I2OQS";
+    QString apikey = "ZLOKSV60340343I8";
 
-    QString urlString = QString("https://www.alphavantage.co/query?function=DIGITAL_CURRENCY_DAILY&symbol=BTC&market=HUF&apikey=%0").arg(apikey);
+    QString urlString = QString("https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=FB&apikey=0%").arg(apikey);
 
     QUrl url(urlString);
     request.setUrl(url);
@@ -38,18 +38,21 @@ void NetworkManager::replyFinished(QNetworkReply *reply)
     QByteArray webData = reply->readAll();
 
     // Store requested data in a file
-    QFile *file = new QFile(QDir::currentPath() + "\\BITCOINDATA.txt");
-    if(file->open(QFile::Append))
+ //   QFile *file = new QFile("E:\QT\QtApp_Net\appdev_project\STOCK_FB.txt");
+    QFile *file = new QFile();
+    file->setFileName("E:\\QT\\QtApp_Net\\appdev_project\\STOCK_FB.txt");
+
+    if(file->open(QFile::Append | QFile::ReadWrite))
     {
       file->write(webData);
       file->flush();
       file->close();
     }
-    delete file;
+ //   delete file;
 
-    QList<QPair<QString,QString>> graphValuesHUF;
-    QList<QPair<QString,QString>> graphValuesVolume;
-    QList<QPair<QString,QString>> graphValuesUSD;
+    QList<QPair<QString,QString>> graphValuesOpen;
+    QList<QPair<QString,QString>> graphValuesHigh;
+    QList<QPair<QString,QString>> graphValuesClose;
 
     //QString webDataString = QString(webData);
 
@@ -64,55 +67,54 @@ void NetworkManager::replyFinished(QNetworkReply *reply)
 
         QJsonObject rootObject = doc.object();
 
-        QJsonObject timeSeries = rootObject["Time Series (Digital Currency Daily)"].toObject();
+        QJsonObject timeSeries = rootObject["Time Series (Daily)"].toObject();
         QStringList keys = timeSeries.keys();
 
         for (QString k :keys){
             QJsonObject dayValues = timeSeries[k].toObject();
-            QString hufValue = dayValues["1a. open (HUF)"].toString();
-            QString volume = dayValues["5. volume"].toString();
-            QString usdValue = dayValues["1b. open (USD)"].toString();
+            QString openvalue = dayValues["1. open"].toString();
+            QString highvalue = dayValues["2. high"].toString();
+            QString closevalue = dayValues["4. close"].toString();
 
             QPair<QString,QString> dataItem;
             dataItem.first = k;
-            dataItem.second = hufValue;
+            dataItem.second = openvalue;
 
             QPair<QString,QString> dataItem2;
             dataItem2.first = k;
-            dataItem2.second = volume;
+            dataItem2.second = highvalue;
 
             QPair<QString,QString> dataItem3;
             dataItem3.first = k;
-            dataItem3.second = usdValue;
+            dataItem3.second = closevalue;
 
 
 
-            graphValuesHUF.append(dataItem);
-            graphValuesVolume.append(dataItem2);
-            graphValuesUSD.append(dataItem3);
+            graphValuesOpen.append(dataItem);
+            graphValuesHigh.append(dataItem2);
+            graphValuesClose.append(dataItem3);
 
             }
 
     }
-    for (int i=0; i<graphValuesHUF.size(); i++){
-        QPair<QString,QString> data = graphValuesHUF[i];
-       // qDebug()<<data.first <<" - "<<data.second;
+    for (int i=0; i<graphValuesOpen.size(); i++){
+        QPair<QString,QString> data = graphValuesOpen[i];
         float list=data.second.toFloat();
         QDateTime xAxisValue; xAxisValue.setDate(QDate::fromString(data.first,"yyyy-MM-dd"));
         xAxisValue.toMSecsSinceEpoch();
         emit valueUpdated(QVariant(xAxisValue),QVariant(list));
     }
 
-    for (int i=0; i<graphValuesVolume.size(); i++){
-        QPair<QString,QString> data = graphValuesVolume[i];
+    for (int i=0; i<graphValuesHigh.size(); i++){
+        QPair<QString,QString> data = graphValuesHigh[i];
         float list = data.second.toFloat();
         QDateTime xAxisValue; xAxisValue.setDate(QDate::fromString(data.first,"yyyy-MM-dd"));
         xAxisValue.toMSecsSinceEpoch();
         emit valueUpdated2(QVariant(xAxisValue),QVariant(list));
     }
 
-    for (int i=0; i<graphValuesUSD.size(); i++){
-        QPair<QString,QString> data = graphValuesUSD[i];
+    for (int i=0; i<graphValuesClose.size(); i++){
+        QPair<QString,QString> data = graphValuesClose[i];
         float list=data.second.toFloat();
         QDateTime xAxisValue; xAxisValue.setDate(QDate::fromString(data.first,"yyyy-MM-dd"));
         xAxisValue.toMSecsSinceEpoch();

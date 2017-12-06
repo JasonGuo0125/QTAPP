@@ -11,7 +11,7 @@ Item {
     Connections {
         target: netManager
         onValueUpdated3: {
-            y = y / 100
+
             series3.append(x, y)
             if (x > xAxis.max) {
                 xAxis.max = x
@@ -34,7 +34,7 @@ Item {
             Text {
                 id: text1
                 color: "#e91e1e"
-                text: qsTr("Daily BTC - USD Rates")
+                text: qsTr("Daily Stock_FB - Close")
                 font.pointSize: 20
                 font.italic: true
             }
@@ -52,16 +52,16 @@ Item {
 
         ChartView {
             id: chartView
-            title: "Bitcoin-USD chart"
+            title: "Daily chart"
             anchors.fill: parent
             ValueAxis {
                 id: yAxis
-                titleText: "*100 USD"
+                titleText: "CloseValue"
                 titleVisible: true
                 gridVisible: true
                 tickCount: 11
-                min: 0
-                max: 100
+                min: 150
+                max: 200
             }
             DateTimeAxis {
                 id: xAxis
@@ -70,14 +70,14 @@ Item {
                 labelsAngle: 90
                 gridVisible: true
                 format: "yyyy-MM-dd"
-                min: "2015-08-01"
-                max: "2016-12-01"
+                min: "2017-08-01"
+                max: "2017-12-01"
             }
             LineSeries {
                 id: series3
                 axisX: xAxis
                 axisY: yAxis
-                name: "BTC-USD series"
+                name: "Daily Stock_FB series"
                 visible: true
             }
         }
